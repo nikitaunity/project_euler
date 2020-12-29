@@ -43,6 +43,21 @@ std::vector<bool> generateSieve(const size_t& max_value) {
     return sieve;
 }
 
+
+std::vector<uint64_t> generatePrimeNumbers(const std::vector<bool>& sieve) {
+
+    std::vector<uint64_t> prime_numbers = {2};
+
+    for (uint64_t index = 0; index < sieve.size(); ++index) {
+        if (sieve[index]) {
+            prime_numbers.push_back((index << 1) + 1);
+        }
+    }
+
+    return prime_numbers;
+}
+
+
 std::vector<uint64_t> returnDistinctPrimeFactors(
         uint64_t number,
         const std::vector<bool> &sieve,
@@ -161,13 +176,7 @@ int main(int argc, char** argv) {
     uint64_t max_number = static_cast<uint64_t>(std::atoll(argv[1]));
 
     auto sieve = generateSieve(static_cast<size_t>(max_prime));
-
-    std::vector<uint64_t> prime_numbers = {2};
-    for (size_t index = 0; index < sieve.size(); ++index) {
-        if (sieve[index]) {
-            prime_numbers.push_back((index << 1) + 1);
-        }
-    }
+    auto prime_numbers = generatePrimeNumbers(sieve);
 
     uint64_t answer = 0;
     for (const auto& prime_number: prime_numbers) {
